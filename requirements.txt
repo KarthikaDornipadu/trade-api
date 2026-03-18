@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+google-generativeai
+python-dotenv
+duckduckgo-search
+slowapi
+pydantic
+python-multipart
+pyjwt
+passlib[bcrypt]
+markdown
+sqlalchemy
+databases[aiosqlite]
+gunicorn
