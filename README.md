@@ -5,8 +5,7 @@ A high-performance **FastAPI** service that analyzes market data for specific se
 ---
 
 ## 🚀 Deployment Links
-- **Public API URL**: `https://trade-api-xxxx.onrender.com` (Replace with your actual Render URL)
-- **Interactive Documentation**: `https://trade-api-xxxx.onrender.com/docs`
+- **Public API URL**: `https://trade-api-eb6y.onrender.com/docs` 
 
 
 ---
