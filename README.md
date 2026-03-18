@@ -7,7 +7,7 @@ A high-performance **FastAPI** service that analyzes market data for specific se
 ## 🚀 Deployment Links
 - **Public API URL**: `https://trade-api-xxxx.onrender.com` (Replace with your actual Render URL)
 - **Interactive Documentation**: `https://trade-api-xxxx.onrender.com/docs`
-- **Alternative Documentation**: `https://trade-api-xxxx.onrender.com/redoc`
+
 
 ---
 
@@ -36,7 +36,14 @@ This API is protected to prevent unauthorized usage and quota exhaustion.
 2.  Locate and click the green **"Authorize"** button at the top right.
 3.  In the popup, paste `trade_api_secret_key_123` into the text field.
 4.  Click **"Authorize"**, then **"Close"**.
-5.  You can now use **"Try it out"** on any endpoint!
+
+### **How to Generate an Analysis**
+1.  After authorizing, scroll down to the **"Analysis"** section.
+2.  Click on the **`GET /analyze/{sector}`** endpoint to expand it.
+3.  Click the **"Try it out"** button on the right side.
+4.  Under **Parameters**, type the sector/topic you want to know about (e.g., `Renewable Energy`) in the **sector** field.
+5.  Click the large blue **"Execute"** button.
+6.  Scroll down to the **"Server response"** to see your professional market analysis!
 
 ---
 
