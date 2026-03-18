@@ -1,117 +1,100 @@
-# Trade Opportunities API
+# 🇮🇳 Trade Opportunities API (India)
 
-A FastAPI-based service that analyzes market data for specific sectors in India and provides structured trade opportunity reports using Google Gemini AI.
+A high-performance **FastAPI** service that analyzes market data for specific sectors in India. This project integrates the **Google Gemini AI** and real-time **web search capabilities** to deliver structured, actionable trade opportunity reports.
 
-## 🚀 Live Demo
-- **Public API Link**: `https://YOUR_LINK_HERE.onrender.com`
-- **Interactive Documentation**: `https://YOUR_LINK_HERE.onrender.com/docs`
+---
 
-## Features
+## 🚀 Deployment Links
+- **Public API URL**: `https://trade-api-xxxx.onrender.com` (Replace with your actual Render URL)
+- **Interactive Documentation**: `https://trade-api-xxxx.onrender.com/docs`
+- **Alternative Documentation**: `https://trade-api-xxxx.onrender.com/redoc`
 
-- **Sector Analysis**: Accepts a sector name (e.g., "pharmaceuticals", "technology") and returns a markdown report.
-- **AI-Powered**: Uses Google Gemini API for deep market analysis.
-- **Fresh Data**: Integrates web search to fetch the latest market news and trends.
-- **Persistence**: SQLite database stores analysis history, so sessions aren't lost on restart.
-- **Security**: 
-  - API Key Authentication (`X-API-KEY` header).
-  - Rate Limiting (5 requests per minute).
-  - Input validation with Pydantic.
-- **Architecture**: Clean separation of data collection, AI analysis, and API layers.
+---
 
-## Prerequisites
+## 📑 Project Overview
 
-- Python 3.8+
-- Google Gemini API Key (set in `.env` or as an environment variable)
+The **Trade Opportunities API** is designed for investors, analysts, and developers looking for automated market insights. By simply providing a sector name (e.g., "Renewable Energy", "EV Infrastructure"), the system performs deep-dive research and returns a professional-grade analysis report in Markdown format.
 
-## 🔑 Authentication
+### **Core Functionality**
+- **🔍 Intelligent Sector Research**: Dynamically scrapes the latest news and market trends using DuckDuckGo search integration.
+- **🤖 AI Analysis**: Processes raw market context through the **Gemini 1.5 Pro/Flash** model to extract insights, risks, and specific trade opportunities.
+- **📦 Reliable Persistence**: Uses an **asynchronous SQLite database** (`databases` + `sqlalchemy`) to ensure your sector analysis history is saved across server restarts.
+- **🛡️ Shielded Security**: Protected by API Key authentication and custom rate limiting.
 
-All endpoints require an API Key.
+---
 
+## 🔑 Authentication & Authorization
+
+This API is protected to prevent unauthorized usage and quota exhaustion.
+
+### **Credentials**
 - **Header Name**: `X-API-KEY`
-- **Key Value**: `trade_api_secret_key_123`
+- **API Key**: `trade_api_secret_key_123`
 
-**How to Authorize on Swagger UI:**
-1. Navigate to `/docs`.
-2. Click the **"Authorize"** button (green lock icon).
-3. Paste `trade_api_secret_key_123` into the `Value` field.
-4. Click **"Authorize"** and then **"Close"**.
-
----
-
-## Installation & Setup (Local)
-
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/YOUR_USERNAME/trade-api.git
-   cd trade-api
-   ```
-2. **Install dependencies**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-3. **Configure Environment**:
-   Create a `.env` file:
-   ```env
-   GEMINI_API_KEY="your_actual_gemini_api_key"
-   DATABASE_URL="sqlite:///./trade_api.db"
-   ```
-
-## Running the Application
-
-### Locally:
-```bash
-python main.py
-```
-
-### Production (on Render):
-Your `Procfile` is already configured for Gunicorn.
-```bash
-gunicorn -w 4 -k uvicorn.workers.UvicornWorker main:app
-```
+### **How to Authorize (Swagger UI Guide)**
+1.  Open the `/docs` URL in your browser.
+2.  Locate and click the green **"Authorize"** button at the top right.
+3.  In the popup, paste `trade_api_secret_key_123` into the text field.
+4.  Click **"Authorize"**, then **"Close"**.
+5.  You can now use **"Try it out"** on any endpoint!
 
 ---
 
-## 🛠️ API Endpoints
+## 🛠️ Technical Architecture
 
-### 1. Root: `GET /`
-Check service status and instructions.
+The project follows a modular, clean-code architecture for maximum scalability:
 
-### 2. Analyze: `GET /analyze/{sector}`
-Analyze a specific sector in India.
-**Sample Request:**
-```bash
-curl -H "X-API-KEY: trade_api_secret_key_123" http://localhost:8000/analyze/pharmaceuticals
-```
-
-### 3. Session History: `GET /sessions/history`
-View the analysis history for your session.
-
-### 4. Download Report: `GET /analyze/{sector}/download`
-Download the analysis as a `.md` file.
+1.  **API Layer (`main.py`)**: Handles routing, dependency injection (security), and database connection life-cycles.
+2.  **Service Layer**:
+    - `services/search_service.py`: Responsible for external I/O (fetching real-time market news).
+    - `services/ai_service.py`: Handles Gemini prompt engineering and response parsing.
+3.  **Persistence Layer**: Uses **SQLAlchemy** to manage a local SQLite database for storing analysis results.
+4.  **Security Layer (`core/security.py`)**: Implements the `X-API-KEY` verification and utilizes `slowapi` for request throttling.
 
 ---
 
-## Project Structure
+## 📖 Endpoint Documentation
 
-```
-trade-api/
-├── main.py              # Main API entry point and routes
-├── .env                 # API Keys and sensitive configuration
-├── requirements.txt     # List of project dependencies
-├── README.md            # Setup and usage instructions
-├── Procfile             # Deployment configuration for Render
-├── core/
-│   ├── config.py        # Centralized configuration management
-│   └── security.py      # Security (Auth & Rate Limiting)
-├── services/
-│   ├── search_service.py # Web scraping/searching logic
-│   └── ai_service.py     # Gemini AI analysis logic
-└── schemas/             # Pydantic models for responses
-```
+### **1. Analyze Sector**
+- **Endpoint**: `GET /analyze/{sector}`
+- **Description**: Triggers a real-time crawl and AI analysis of the specified sector.
+- **Response**: Returns a JSON object containing the sector name and a comprehensive report.
 
-## Security & Best Practices
+### **2. Download Markdown Report**
+- **Endpoint**: `GET /analyze/{sector}/download`
+- **Description**: Fetches the latest analysis for a sector and returns it as a downloadable `.md` file.
 
-- **Rate Limiting**: Implemented via `slowapi` to prevent abuse.
-- **Input Validation**: Pydantic models ensure inputs are valid.
-- **Environment Variables**: Sensitive keys are loaded securely.
-- **Async Handling**: All external I/O and AI calls are non-blocking.
+### **3. Session History**
+- **Endpoint**: `GET /sessions/history`
+- **Description**: Provides a history of all analyses performed by the current API key holder.
+
+---
+
+## 💻 Local Installation & Setup
+
+1.  **Clone the Repo**:
+    ```bash
+    git clone https://github.com/KarthikaDornipadu/trade-api.git
+    cd trade-api
+    ```
+
+2.  **Environment Variables**:
+    Create a `.env` file in the root directory:
+    ```env
+    GEMINI_API_KEY="your_api_key_from_google_ai_studio"
+    DATABASE_URL="sqlite:///./trade_api.db"
+    ```
+
+3.  **Install & Run**:
+    ```bash
+    pip install -r requirements.txt
+    python main.py
+    ```
+
+---
+
+## 🛡️ Best Practices & Features
+- **Rate Limiting**: Users are capped at 5 requests per minute to ensure service stability.
+- **Asynchronous Execution**: The API uses `async/await` throughout to handle non-blocking I/O (AI calls and web searching).
+- **Environment Management**: Sensitive keys are never hardcoded; they are managed via `.env` or system environment variables.
+- **Pydantic Validation**: Ensures all inputs are sanitized and outputs follow a strict schema.
